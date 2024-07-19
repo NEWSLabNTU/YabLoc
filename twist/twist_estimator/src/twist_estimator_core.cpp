@@ -76,7 +76,7 @@ void TwistEstimator::on_imu(const Imu & raw_msg)
   if (upside_down) {
     msg.angular_velocity.z = -msg.angular_velocity.z;
   }
-
+  msg.angular_velocity.z = -msg.angular_velocity.z;
   auto dt = (rclcpp::Time(msg.header.stamp) - last_imu_stamp_.value()).seconds();
   last_imu_stamp_ = msg.header.stamp;
 

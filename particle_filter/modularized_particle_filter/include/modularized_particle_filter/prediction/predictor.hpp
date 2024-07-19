@@ -27,6 +27,7 @@
 #include <geometry_msgs/msg/twist_with_covariance_stamped.hpp>
 #include <modularized_particle_filter_msgs/msg/particle_array.hpp>
 #include <std_msgs/msg/float32.hpp>
+#include <std_msgs/msg/string.hpp>
 
 #include <tf2_ros/transform_broadcaster.h>
 
@@ -36,10 +37,12 @@ class Predictor : public rclcpp::Node
 {
 public:
   using ParticleArray = modularized_particle_filter_msgs::msg::ParticleArray;
+  using Particle = modularized_particle_filter_msgs::msg::Particle;
   using PoseStamped = geometry_msgs::msg::PoseStamped;
   using PoseCovStamped = geometry_msgs::msg::PoseWithCovarianceStamped;
   using TwistCovStamped = geometry_msgs::msg::TwistWithCovarianceStamped;
   using TwistStamped = geometry_msgs::msg::TwistStamped;
+  using String = std_msgs::msg::String;
 
   Predictor();
 
@@ -63,6 +66,7 @@ private:
   rclcpp::Publisher<ParticleArray>::SharedPtr predicted_particles_pub_;
   rclcpp::Publisher<PoseStamped>::SharedPtr pose_pub_;
   rclcpp::Publisher<PoseCovStamped>::SharedPtr pose_cov_pub_;
+  rclcpp::Publisher<String>::SharedPtr pub_string_;
   std::unique_ptr<tf2_ros::TransformBroadcaster> tf2_broadcaster_;
 
   // Timer callback

@@ -44,7 +44,8 @@ Predictor::Predictor()
   predicted_particles_pub_ = create_publisher<ParticleArray>("predicted_particles", 10);
   pose_pub_ = create_publisher<PoseStamped>("pose", 10);
   pose_cov_pub_ = create_publisher<PoseCovStamped>("pose_with_covariance", 10);
-
+  pub_string_ = create_publisher<String>("variance_string", 10);
+  
   // Subscribers
   using std::placeholders::_1;
   auto on_initial = std::bind(&Predictor::on_initial_pose, this, _1);
@@ -105,11 +106,12 @@ void Predictor::initialize_particles(const PoseCovStamped & initialpose)
     pose.orientation.x = 0.0;
     pose.orientation.y = 0.0;
     pose.orientation.z = std::sin(noised_yaw / 2.0);
-
+    
     particle.pose = pose;
     particle.weight = 1.0;
   }
   particle_array_opt_ = particle_array;
+  
 
   // We have to initialize resampler every particles initialization,
   // because resampler has particles resampling history and it will be outdate.
@@ -153,9 +155,9 @@ void Predictor::update_with_dynamic_noise(
     noised_xi(0) = linear_x + util::nrand(truncated_linear_std);
     noised_xi(5) = angular_z + util::nrand(truncated_angular_std);
     se3_pose *= Sophus::SE3f::exp(noised_xi * dt);
-
     geometry_msgs::msg::Pose pose = common::se3_to_pose(se3_pose);
     pose.position.z = ground_height_;
+    //pose.position.z = 0.0;
     particle.pose = pose;
   }
 }
@@ -205,6 +207,34 @@ void Predictor::on_timer()
   predicted_particles_pub_->publish(particle_array);
   //
   publish_mean_pose(mean_pose(particle_array), this->now());
+
+  // Calculate the variance of particle filter
+  //
+  geometry_msgs::msg::Pose mean = mean_pose(particle_array);
+  double var_x = 0, var_y = 0, var_z = 0;
+  double sum_weight = std::accumulate(
+    particle_array.particles.begin(), particle_array.particles.end(), 0.0,
+    [](double weight, const Particle & particle) { return weight + particle.weight; });
+
+  for (auto & particle : particle_array.particles) {
+      var_x += particle.weight * std::pow(particle.pose.position.x - mean.position.x, 2);
+      var_y += particle.weight * std::pow(particle.pose.position.y - mean.position.y, 2);
+      var_z += particle.weight * std::pow(particle.pose.position.z - mean.position.z, 2);
+  }
+  var_x /= sum_weight;
+  var_y /= sum_weight;
+  var_z /= sum_weight;
+
+  // Publish status as string
+  String msg;
+  std::stringstream ss;
+  ss << "-- Particle Variance --" << std::endl;
+  ss << "var_x: " << var_x << std::endl;
+  ss << "var_y: " << var_y << std::endl;
+  ss << "var_z: " << var_z << std::endl;
+  msg.data = ss.str();
+  pub_string_->publish(msg);
+
   // If visualizer exists,
   if (visualizer_ptr_) {
     visualizer_ptr_->publish(particle_array);
@@ -291,7 +321,10 @@ void Predictor::publish_mean_pose(
     transform.child_frame_id = "particle_filter";
     transform.transform.translation.x = mean_pose.position.x;
     transform.transform.translation.y = mean_pose.position.y;
+    //transform.transform.translation.z = 40.0;
     transform.transform.translation.z = mean_pose.position.z;
+    
+    
     transform.transform.rotation = mean_pose.orientation;
     tf2_broadcaster_->sendTransform(transform);
   }

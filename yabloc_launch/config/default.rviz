@@ -247,6 +247,48 @@ Visualization Manager:
           Topic: /localization/pf/state_string
           Value: true
           Width: 400
+        - Background Alpha: 0
+          Background Color: 50; 50; 50
+          Class: rviz_plugins/String
+          Enabled: true
+          Font Size: 16
+          Foreground Color: 255; 255; 40
+          Foregrund Alpha: 0.800000011920929
+          Height: 256
+          Left: 1600
+          Name: PF/ParticleVariance
+          Top: 0
+          Topic: /localization/pf/variance_string
+          Value: true
+          Width: 400
+        - Background Alpha: 0
+          Background Color: 50; 50; 50
+          Class: rviz_plugins/String
+          Enabled: true
+          Font Size: 16
+          Foreground Color: 255; 255; 40
+          Foregrund Alpha: 0.800000011920929
+          Height: 256
+          Left: 1600
+          Name: PF/differenceVariance
+          Top: 150
+          Topic: /ade_value
+          Value: true
+          Width: 400
+        - Background Alpha: 0
+          Background Color: 50; 50; 50
+          Class: rviz_plugins/String
+          Enabled: true
+          Font Size: 16
+          Foreground Color: 255; 255; 40
+          Foregrund Alpha: 0.800000011920929
+          Height: 256
+          Left: 1600
+          Name: PF/differenceVariance
+          Top: 200
+          Topic: /difference_value
+          Value: true
+          Width: 400
       Enabled: true
       Name: Status
     - Class: rviz_common/Group
