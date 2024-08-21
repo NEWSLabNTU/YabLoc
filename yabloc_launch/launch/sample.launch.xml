@@ -12,7 +12,7 @@
         <arg name="static_angular_covariance" value="0.006"/>
         <arg name="static_scale_factor" value="-1.0" />
 
-        <arg name="road_marking_labels" value="[cross_walk, zebra_marking, line_thin, line_thick, pedestrian_marking, stop_line, road_border]"/>
+        <arg name="road_marking_labels" value="[cross_walk, zebra_marking, line_thin, line_thick, pedestrian_marking, stop_line, road_border, virtual]"/>
         <arg name="sign_board_labels" value="[sign-board]"/>
     </include>
 </launch>
