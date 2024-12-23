@@ -1,6 +1,8 @@
 <launch>
     <arg name="use_sim_time" default="true"/>
-
+    <!-- Param setting for iot_course -->
+    <arg name="num_of_particles" default="500"/>
+    <arg name="prediction_rate" default="50.0"/>
 
     <arg name="static_linear_covariance" default="12.00"/>
     <arg name="static_angular_covariance" default="0.005"/>
@@ -21,9 +23,9 @@
         <remap from="initialpose" to="$(var input_initialpose)" />
 
         <param name="use_sim_time" value="$(var use_sim_time)"/>
-        <param name="num_of_particles" value="500" />
+        <param name="num_of_particles" value="$(var num_of_particles)" />
         <param name="resampling_interval_seconds" value="1.0" />
-        <param name="prediction_rate" value="50.0" />
+        <param name="prediction_rate" value="$(var prediction_rate)" />
 
         <param name="static_linear_covariance" value="$(var static_linear_covariance)" />
         <param name="static_angular_covariance" value="$(var static_angular_covariance)" />

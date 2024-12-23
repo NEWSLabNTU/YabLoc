@@ -1,4 +1,8 @@
 <launch>
+    <!-- Param setting for iot_course -->
+    <arg name="num_of_particles" default="500"/>
+    <arg name="prediction_rate" default="50.0"/>
+    
     <!-- NOTE: -->
     <arg name="standalone" description="[true,false] Set to true if not connected to Autoware's P/C."/>
     <arg name="use_sim_time" default="true"/>
@@ -27,7 +31,10 @@
         <!-- particle filter -->
         <group>
             <push-ros-namespace namespace="pf"/>
-            <include file="$(find-pkg-share yabloc_launch)/launch/impl/pf.launch.xml"/>
+            <include file="$(find-pkg-share yabloc_launch)/launch/impl/pf.launch.xml">
+                <arg name="num_of_particles" value="$(var num_of_particles)"/>
+                <arg name="prediction_rate" value="$(var prediction_rate)"/>
+            </include>
         </group>
 
         <!-- static tf -->
