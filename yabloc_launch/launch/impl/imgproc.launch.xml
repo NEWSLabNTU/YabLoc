@@ -49,12 +49,17 @@
     <!-- graph based segmentation -->
     <arg name="output_graph_segmented" default="graph_segmented"/>
     <arg name="output_segmented_image" default="segmented_image"/>
-    <node name="graph_segment" pkg="graph_segment" exec="graph_segment_node" output="screen" args="--ros-args --log-level warn">
+    <!-- <node name="graph_segment" pkg="graph_segment" exec="graph_segment_node" output="screen" args="-\-ros-args -\-log-level warn"> -->
+    <!--     <remap from="src_image" to="$(var resized_image)"/> -->
+    <!--     <remap from="graph_segmented" to="$(var output_graph_segmented)"/> -->
+    <!--     <remap from="segmented_image" to="$(var output_segmented_image)"/> -->
+    <!--     <param name="target_height_ratio" value="$(var target_height_ratio)"/> -->
+    <!--     <param name="pickup_additional_areas" value="$(var pickup_additional_graph_segment)"/> -->
+    <!-- </node> -->
+    <node name="ntu_segment" pkg="ntu_segment" exec="ntu_segment_node" output="screen" args="--ros-args --log-level warn">
         <remap from="src_image" to="$(var resized_image)"/>
         <remap from="graph_segmented" to="$(var output_graph_segmented)"/>
         <remap from="segmented_image" to="$(var output_segmented_image)"/>
-        <param name="target_height_ratio" value="$(var target_height_ratio)"/>
-        <param name="pickup_additional_areas" value="$(var pickup_additional_graph_segment)"/>
     </node>
 
     <!-- segment fitler -->
