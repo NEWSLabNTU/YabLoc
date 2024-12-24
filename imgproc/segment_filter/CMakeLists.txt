@@ -26,6 +26,9 @@ find_package(OpenCV REQUIRED)
 # PCL
 find_package(PCL REQUIRED COMPONENTS common)
 
+# Sophus
+find_package(Sophus REQUIRED)
+
 # ===================================================
 # Executable
 set(TARGET segment_filter_node)
@@ -33,7 +36,7 @@ ament_auto_add_executable(${TARGET}
   src/segment_filter_node.cpp
   src/segment_filter_core.cpp)
 target_include_directories(${TARGET} PUBLIC include ${EIGEN3_INCLUDE_DIRS} ${PCL_INCLUDE_DIRS})
-target_link_libraries(${TARGET} ${PCL_LIBRARIES} ${OpenCV_LIBS})
+target_link_libraries(${TARGET} ${PCL_LIBRARIES} ${OpenCV_LIBS} Sophus::Sophus)
 
 # ===================================================
 ament_auto_package()

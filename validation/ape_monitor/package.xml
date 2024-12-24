@@ -17,6 +17,7 @@
 
   <depend>yabloc_common</depend>
   <depend>modularized_particle_filter_msgs</depend>
+  <depend>sophus</depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
