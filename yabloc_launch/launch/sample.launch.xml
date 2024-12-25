@@ -8,7 +8,7 @@
     <arg name="file_name" default="daytime"/>
     <!-- NODE for prediction error estimate -->
     <node pkg="distance_verifier" exec="distance_verifier" name="distance_verifier">
-        <param name="file_name" value="$(var path_name)"/>
+        <param name="file_name" value="$(var file_name)"/>
     </node>
     <include file="$(find-pkg-share yabloc_launch)/launch/yabloc.launch.xml">
         <arg name="standalone" value="$(var standalone)"/>
