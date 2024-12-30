@@ -5,10 +5,10 @@
     <arg name="prediction_rate" default="50.0"/>
     <arg name="min_segment_length" default="1.5"/>
     <arg name="max_segment_distance" default="30.0"/>
-    <arg name="path_name" default="daytime"/>
+    <arg name="file_name" default="daytime"/>
     <!-- NODE for prediction error estimate -->
     <node pkg="distance_verifier" exec="distance_verifier" name="distance_verifier">
-        <param name="path_name" value="$(var path_name)"/>
+        <param name="file_name" value="$(var file_name)"/>
     </node>
     <include file="$(find-pkg-share yabloc_launch)/launch/yabloc.launch.xml">
         <arg name="standalone" value="$(var standalone)"/>
