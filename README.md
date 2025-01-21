@@ -42,7 +42,7 @@ Someday this will be located in the workspace where Autoware blongs. The followi
 ```shell
 mkdir yabloc_ws/src -p
 cd yabloc_ws
-git clone git@github.com:tier4/YabLoc.git src/YabLoc --recursive
+git clone git@github.com:NEWSLabNTU/YabLoc.git src/YabLoc --recursive
 rosdep install -y --from-paths src --ignore-src --rosdistro $ROS_DISTRO
 colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
 source install/setup.bash
