@@ -1,5 +1,6 @@
 <launch>
     <arg name="standalone" default="true" description="Set to true if not connected to Autoware's P/C."/>
+    <arg name="use_sim_time" default="true"/>
 
     <include file="$(find-pkg-share yabloc_launch)/launch/yabloc.launch.xml">
         <arg name="standalone" value="$(var standalone)"/>
@@ -14,5 +15,9 @@
 
         <arg name="road_marking_labels" value="[cross_walk, zebra_marking, line_thin, line_thick, pedestrian_marking, stop_line, road_border, virtual]"/>
         <arg name="sign_board_labels" value="[sign-board]"/>
+    </include>
+
+    <include file="$(find-pkg-share yabloc_launch)/launch/rviz.launch.xml">
+        <arg name="use_sim_time" value="$(var use_sim_time)"/>
     </include>
 </launch>
